@@ -1,0 +1,15 @@
+{
+  "name": "logisense-mern",
+  "version": "1.0.0",
+  "description": "LogiSense Real-Time Logistics Capacity Dashboard — MERN Stack",
+  "private": true,
+  "scripts": {
+    "install:all": "npm install --prefix server && npm install --prefix client",
+    "seed": "npm run seed --prefix server",
+    "dev:server": "npm run dev --prefix server",
+    "dev:client": "npm run dev --prefix client",
+    "dev": "npx -y concurrently -k -p \"[{name}]\" -n \"SERVER,CLIENT\" -c \"cyan,magenta\" \"npm run dev:server\" \"npm run dev:client\"",
+    "build": "npm run build --prefix client",
+    "start": "npm run start --prefix server"
+  }
+}
