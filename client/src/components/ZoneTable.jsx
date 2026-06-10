@@ -1,5 +1,5 @@
 import { useState, useMemo } from 'react';
-import { useApp } from '../context/AppContext';
+import { useApp } from '../context/useApp';
 
 function getStatus(u) {
   if (u >= 0.85) return 'critical';
@@ -11,6 +11,19 @@ function getStatusLabel(u, shortage) {
   if (u >= 0.85) return 'Overloaded';
   if (u >= 0.65) return 'Medium Load';
   return 'Healthy';
+}
+
+function TableHeaderCell({ col, children, sort, onSort }) {
+  return (
+    <th
+      className={`zt-th ${sort.col === col ? (sort.dir === -1 ? 'sorted-desc' : 'sorted-asc') : ''}`}
+      data-col={col}
+      onClick={() => onSort(col)}
+      style={{ cursor: 'pointer' }}
+    >
+      {children}
+    </th>
+  );
 }
 
 export default function ZoneTable() {
@@ -40,17 +53,6 @@ export default function ZoneTable() {
     setSort(s => ({ col, dir: s.col === col ? -s.dir : -1 }));
   };
 
-  const Th = ({ col, children }) => (
-    <th
-      className={`zt-th ${sort.col === col ? (sort.dir === -1 ? 'sorted-desc' : 'sorted-asc') : ''}`}
-      data-col={col}
-      onClick={() => handleSort(col)}
-      style={{ cursor: 'pointer' }}
-    >
-      {children}
-    </th>
-  );
-
   const shortageCount = rows.filter(r => r.shortage).length;
 
   return (
@@ -76,18 +78,18 @@ export default function ZoneTable() {
         <table className="zone-table">
           <thead>
             <tr>
-              <Th col="name">City</Th>
-              <Th col="region">Region</Th>
-              <Th col="capacity">Capacity</Th>
-              <Th col="utilization">Utilization</Th>
-              <Th col="riders">Riders</Th>
-              <Th col="vehicles">Vehicles</Th>
-              <Th col="hubUtil">Hub Fill</Th>
-              <Th col="slaCompliance">SLA %</Th>
-              <Th col="pendingRetries">Retries</Th>
-              <Th col="shortage">Shortage</Th>
+              <TableHeaderCell col="name" sort={sort} onSort={handleSort}>City</TableHeaderCell>
+              <TableHeaderCell col="region" sort={sort} onSort={handleSort}>Region</TableHeaderCell>
+              <TableHeaderCell col="capacity" sort={sort} onSort={handleSort}>Capacity</TableHeaderCell>
+              <TableHeaderCell col="utilization" sort={sort} onSort={handleSort}>Utilization</TableHeaderCell>
+              <TableHeaderCell col="riders" sort={sort} onSort={handleSort}>Riders</TableHeaderCell>
+              <TableHeaderCell col="vehicles" sort={sort} onSort={handleSort}>Vehicles</TableHeaderCell>
+              <TableHeaderCell col="hubUtil" sort={sort} onSort={handleSort}>Hub Fill</TableHeaderCell>
+              <TableHeaderCell col="slaCompliance" sort={sort} onSort={handleSort}>SLA %</TableHeaderCell>
+              <TableHeaderCell col="pendingRetries" sort={sort} onSort={handleSort}>Retries</TableHeaderCell>
+              <TableHeaderCell col="shortage" sort={sort} onSort={handleSort}>Shortage</TableHeaderCell>
               <th className="zt-th">Status</th>
-              <Th col="trend">Trend</Th>
+              <TableHeaderCell col="trend" sort={sort} onSort={handleSort}>Trend</TableHeaderCell>
             </tr>
           </thead>
           <tbody>

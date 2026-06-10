@@ -5,7 +5,7 @@ const AlertSchema = new mongoose.Schema({
   icon:      { type: String, default: '🟢' },
   msg:       { type: String, required: true },
   city:      { type: String, default: null },
-  createdAt: { type: Date, default: Date.now, index: true },
+  createdAt: { type: Date, default: Date.now },
 });
 
 // Auto-expire alerts older than 24 hours

@@ -4,10 +4,12 @@
 // ===================================================
 
 const City  = require('../models/City');
+const Route = require('../models/Route');
 const Alert = require('../models/Alert');
 
 // ── Utilities ─────────────────────────────────────
 function rnd(min, max) { return min + Math.random() * (max - min); }
+function clamp(v, min, max) { return Math.max(min, Math.min(max, v)); }
 function rndInt(min, max) { return Math.floor(rnd(min, max + 1)); }
 function clamp(v, min, max) { return Math.max(min, Math.min(max, v)); }
 
@@ -140,6 +142,22 @@ async function tick(io) {
     }
 
     if (bulkOps.length) await City.bulkWrite(bulkOps);
+
+    // Drift route availability and status
+    const routes = await Route.find({});
+    const routeOps = [];
+    for (const route of routes) {
+      const available = Math.max(0, Math.min(route.capacity, Math.floor(drift(route.available, 0.05, 1, route.capacity))));
+      const utilization = route.capacity ? parseFloat(((route.capacity - available) / route.capacity).toFixed(4)) : 0;
+      const status = carrierStatus(available, route.capacity);
+      routeOps.push({
+        updateOne: {
+          filter: { _id: route._id },
+          update: { $set: { available, utilization, status, updatedAt: new Date() } },
+        },
+      });
+    }
+    if (routeOps.length) await Route.bulkWrite(routeOps);
 
     // Random alert ~40% chance
     let newAlert = null;

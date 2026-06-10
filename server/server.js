@@ -10,7 +10,7 @@ const { tick }   = require('./services/dataEngine');
 const citiesRouter     = require('./routes/cities');
 const alertsRouter     = require('./routes/alerts');
 const forecastRouter   = require('./routes/forecast');
-const simulationRouter = require('./routes/simulation');
+const routesRouter     = require('./routes/routes');
 
 // ── App setup ─────────────────────────────────────
 const app    = express();
@@ -30,7 +30,7 @@ app.use(express.json());
 app.use('/api/cities',     citiesRouter);
 app.use('/api/alerts',     alertsRouter);
 app.use('/api/forecast',   forecastRouter);
-app.use('/api/simulate',   simulationRouter);
+app.use('/api/routes',     routesRouter);
 
 // Health check
 app.get('/api/health', (req, res) => {
@@ -45,11 +45,6 @@ io.on('connection', (socket) => {
     console.log(`❌ Client disconnected: ${socket.id}`);
   });
 
-  // Simulation via socket (optional — also available via REST)
-  socket.on('simulation:update', async (params) => {
-    // Just acknowledge; client can use REST for simulation
-    socket.emit('simulation:ack', { received: true, params });
-  });
 });
 
 // ── Start ─────────────────────────────────────────

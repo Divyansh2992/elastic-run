@@ -3,7 +3,7 @@ import {
   CategoryScale, LinearScale, BarElement,
 } from 'chart.js';
 import { Doughnut, Bar } from 'react-chartjs-2';
-import { useApp } from '../context/AppContext';
+import { useApp } from '../context/useApp';
 
 ChartJS.register(ArcElement, Tooltip, Legend, CategoryScale, LinearScale, BarElement);
 

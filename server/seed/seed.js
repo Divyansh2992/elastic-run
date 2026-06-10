@@ -7,6 +7,7 @@ require('dotenv').config();
 const mongoose  = require('mongoose');
 const connectDB = require('../config/db');
 const City      = require('../models/City');
+const Route     = require('../models/Route');
 const Alert     = require('../models/Alert');
 const Forecast  = require('../models/Forecast');
 
@@ -136,6 +137,89 @@ function buildForecast(cities) {
   return docs;
 }
 
+const ROUTE_AREAS = ['Central Hub', 'North Depot', 'East Terminal', 'West Yard', 'South Cargo Park', 'Airport Gate', 'Industrial Park', 'Gateway Terminal', 'Logistics Park'];
+const PRODUCT_TYPES = ['FMCG', 'Pharma', 'E-commerce', 'Industrial', 'Electronics'];
+const ROUTE_STOPS   = ['Kalyan', 'Lonavala', 'Daund', 'Pune MIDC', 'Vadodara', 'Ahmedabad Hub', 'Nagpur Junction', 'Bhopal Yard', 'Jaipur Expressway', 'Bengaluru Outer'];
+const ROUTE_VEHICLES = {
+  road: ['truck', 'van', 'bus'],
+  rail: ['container', 'trailer'],
+  air: ['cargo-plane'],
+  sea: ['container'],
+};
+
+function pickArea(city) {
+  return `${city.name} ${ROUTE_AREAS[rndInt(0, ROUTE_AREAS.length - 1)]}`;
+}
+
+function pickStops(origin, destination) {
+  const routeStops = [...ROUTE_STOPS].filter(name => ![origin.cityName, destination.cityName].includes(name));
+  const count = rndInt(0, 3);
+  const shuffled = routeStops.sort(() => Math.random() - 0.5);
+  return shuffled.slice(0, count);
+}
+
+function buildRoute(origin, destination, index) {
+  const modeChance = Math.random();
+  const mode = modeChance < 0.65 ? 'road' : modeChance < 0.88 ? 'rail' : 'air';
+  const vehicles = ROUTE_VEHICLES[mode];
+  const vehicleType = vehicles[rndInt(0, vehicles.length - 1)];
+  const productCount = rndInt(1, 2);
+  const productTypes = Array.from({ length: productCount }, () => PRODUCT_TYPES[rndInt(0, PRODUCT_TYPES.length - 1)]);
+  const capacity = Math.floor((mode === 'road' ? rndInt(70, 180) : mode === 'rail' ? rndInt(180, 420) : rndInt(20, 90)) * (productCount + 1));
+  const available = Math.max(1, Math.floor(capacity * rnd(0.15, 0.85)));
+  const utilization = parseFloat(((capacity - available) / Math.max(1, capacity)).toFixed(4));
+  const distanceKm = mode === 'road' ? rndInt(140, 360) : mode === 'rail' ? rndInt(220, 700) : rndInt(350, 900);
+  const transitTimeMin = mode === 'road' ? rndInt(180, 420) : mode === 'rail' ? rndInt(240, 750) : rndInt(240, 540);
+  const frequencyPerDay = mode === 'road' ? rndInt(2, 6) : mode === 'rail' ? rndInt(1, 3) : rndInt(1, 2);
+  const status = available / Math.max(1, capacity) < 0.15 ? 'offline' : available / Math.max(1, capacity) < 0.35 ? 'degraded' : 'active';
+
+  return {
+    routeId: `route-${origin.id}-${destination.id}-${index}`,
+    origin: {
+      id: origin.id,
+      cityName: origin.name,
+      region: origin.region,
+      area: pickArea(origin),
+    },
+    destination: {
+      id: destination.id,
+      cityName: destination.name,
+      region: destination.region,
+      area: pickArea(destination),
+    },
+    mode,
+    vehicleType,
+    partner: CARRIER_NAMES[rndInt(0, CARRIER_NAMES.length - 1)],
+    productTypes: Array.from(new Set(productTypes)),
+    capacity,
+    available,
+    utilization,
+    stops: pickStops(origin, destination),
+    transitTimeMin,
+    distanceKm,
+    frequencyPerDay,
+    status,
+  };
+}
+
+function buildRoutes(cities) {
+  const routes = [];
+  cities.forEach(origin => {
+    const destinations = cities
+      .filter(dest => dest.id !== origin.id)
+      .sort(() => Math.random() - 0.5)
+      .slice(0, rndInt(3, 5));
+
+    destinations.forEach((destination, index) => {
+      const count = rndInt(1, 2);
+      for (let i = 0; i < count; i += 1) {
+        routes.push(buildRoute(origin, destination, routes.length + 1));
+      }
+    });
+  });
+  return routes;
+}
+
 const SEED_ALERTS = [
   { type:'critical', icon:'🔴', msg:'Capacity CRITICAL in Delhi — 92% utilization',                      city:'Delhi' },
   { type:'warning',  icon:'🟡', msg:'Mumbai hub nearing full capacity — 87% used',                        city:'Mumbai' },
@@ -156,6 +240,7 @@ async function seed() {
 
   console.log('🗑️  Clearing existing data...');
   await City.deleteMany({});
+  await Route.deleteMany({});
   await Alert.deleteMany({});
   await Forecast.deleteMany({});
 
@@ -163,6 +248,11 @@ async function seed() {
   const cityDocs = CITIES_BASE.map(buildCity);
   const cities   = await City.insertMany(cityDocs);
   console.log(`   ✅ ${cities.length} cities inserted (with fleet types & carriers)`);
+
+  console.log('🛣️  Seeding routes...');
+  const routeDocs = buildRoutes(cityDocs);
+  await Route.insertMany(routeDocs);
+  console.log(`   ✅ ${routeDocs.length} routes inserted`);
 
   console.log('📅 Seeding 14-day forecast...');
   const forecastDocs = buildForecast(cityDocs);

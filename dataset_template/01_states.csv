@@ -1,0 +1,15 @@
+state_name,state_code,zone,utilization_pct,total_hubs,total_cities_covered,shortfall_cities_count,state_capacity_units_per_day,active_fleet_vehicles,active_riders_today,active_partners
+Maharashtra,MH,West,82,108,4,1,145000,4370,5020,28
+Delhi,DL,North,94,42,1,1,72000,1430,2080,14
+Karnataka,KA,South,71,87,2,0,74000,1440,2130,19
+Tamil Nadu,TN,South,88,76,1,1,51000,1020,1490,11
+Telangana,TS,South,78,54,1,0,48000,920,1320,9
+West Bengal,WB,East,91,63,1,1,43000,830,1190,8
+Gujarat,GJ,West,68,58,1,0,35000,670,910,7
+Rajasthan,RJ,North,73,71,2,0,51000,1080,1560,12
+Uttar Pradesh,UP,North,86,92,2,1,53000,1020,1420,11
+Kerala,KL,South,65,41,1,0,22000,410,640,5
+Madhya Pradesh,MP,Central,76,66,2,0,45000,900,1340,10
+Bihar,BR,East,84,49,1,0,21000,390,580,5
+Odisha,OD,East,69,44,1,0,19000,350,520,4
+Assam,AS,East,79,34,1,0,17000,320,460,4

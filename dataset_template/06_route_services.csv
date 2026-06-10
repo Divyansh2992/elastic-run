@@ -1,0 +1,11 @@
+service_id,route_id,origin_city,destination_city,operator_code,operator_name,product_type,payment_mode,sla_type,departure_time,booking_cutoff,transit_days,capacity_units,used_capacity_units,utilization_pct,vehicle_type,assigned_vehicles,on_time_pct,cost_per_unit_inr
+SVC001,R001,Mumbai,Pune,FLT-DE-00089,Sharma Transport Co.,QC-NDD-PU-Biker,COD,NDD,6AM,05:00 AM,4,543,344,63,HCV Truck,3,94,12
+SVC002,R001,Mumbai,Pune,FLT-MU-00090,Metro Haulage,FM-SDD-Prepaid,Prepaid,SDD,10AM,09:00 AM,5,633,462,73,LCV,4,92,15
+SVC003,R001,Mumbai,Pune,FLT-CH-00091,Southern Cargo Lines,LM-2DAY-COD,COD,2-Day,2PM,01:00 PM,6,723,527,73,Tempo,5,90,18
+SVC004,R001,Mumbai,Pune,FLT-KO-00092,Eastern Roadways,QC-NDD-PU-Biker,Prepaid,Economy,6PM,05:00 PM,7,543,366,67,Auto 3W,6,88,21
+SVC005,R001,Mumbai,Pune,FLT-BH-00093,Patel Fleet Services,FM-SDD-Prepaid,COD,NDD,6AM,05:00 AM,4,633,444,70,HCV Truck,3,86,24
+SVC006,R001,Mumbai,Pune,FLT-DE-00094,NorthStar Logistics,LM-2DAY-COD,Prepaid,SDD,10AM,09:00 AM,5,723,598,83,LCV,4,94,12
+SVC007,R001,Mumbai,Pune,FLT-MU-00095,Deccan Carriers,QC-NDD-PU-Biker,COD,2-Day,2PM,01:00 PM,6,543,424,78,Tempo,5,92,15
+SVC008,R004,Mumbai,Delhi,FLT-DE-00089,Sharma Transport Co.,QC-NDD-PU-Biker,COD,NDD,6AM,05:00 AM,13,722,608,84,HCV Truck,5,94,12
+SVC009,R004,Mumbai,Delhi,FLT-MU-00090,Metro Haulage,FM-SDD-Prepaid,Prepaid,SDD,10AM,09:00 AM,14,812,593,73,LCV,3,92,15
+SVC010,R004,Mumbai,Delhi,FLT-CH-00091,Southern Cargo Lines,LM-2DAY-COD,COD,2-Day,2PM,01:00 PM,15,902,740,82,Tempo,4,90,18

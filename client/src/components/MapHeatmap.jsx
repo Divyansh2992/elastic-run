@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { MapContainer, TileLayer, CircleMarker, Popup, useMap } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
-import { useApp } from '../context/AppContext';
+import { useApp } from '../context/useApp';
 
 // ── India bounding box ────────────────────────────
 // Southwest: 6.4°N, 68.1°E  |  Northeast: 35.7°N, 97.4°E
@@ -11,14 +11,6 @@ const INDIA_ZOOM   = 5;
 const MIN_ZOOM     = 4;
 const MAX_ZOOM     = 9;
 
-// ── Reset view to India on demand ────────────────
-function ResetViewControl({ onReset }) {
-  return (
-    <button className="map-reset-btn" onClick={onReset} title="Reset to India view">
-      🇮🇳 Reset View
-    </button>
-  );
-}
 
 // ── Auto-fit India on mount ───────────────────────
 function FitIndia() {
@@ -70,13 +62,7 @@ const VIEW_MODES = [
 ];
 
 // ── Map inner component (needs map context) ───────
-function MapInner({ heatPoints, cities, onResetView }) {
-  const map = useMap();
-
-  const handleReset = () => {
-    map.fitBounds(INDIA_BOUNDS, { padding: [20, 20], maxZoom: INDIA_ZOOM, animate: true, duration: 0.8 });
-  };
-
+function MapInner({ heatPoints, cities }) {
   return (
     <>
       <FitIndia />
@@ -272,7 +258,6 @@ export default function MapHeatmap() {
           <MapInner
             heatPoints={heatPoints}
             cities={state.cities}
-            onResetView={handleResetView}
           />
         </MapContainer>
 

@@ -1,5 +1,5 @@
 import { useRef, useEffect } from 'react';
-import { useApp } from '../context/AppContext';
+import { useApp } from '../context/useApp';
 
 function KpiCard({ icon, iconColor, label, value, sub, dataStatus, trend }) {
   const valRef  = useRef(null);

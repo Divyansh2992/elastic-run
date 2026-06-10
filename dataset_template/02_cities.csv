@@ -1,0 +1,19 @@
+city_name,state_name,state_code,zone,latitude,longitude,city_tier,utilization_pct,daily_capacity_units,active_hubs,active_fleet_vehicles,active_riders,active_partners,is_shortfall
+Mumbai,Maharashtra,MH,West,19.0760,72.8777,Tier 1,82,62000,28,1240,1820,12,No
+Pune,Maharashtra,MH,West,18.5204,73.8567,Tier 1,74,42000,20,780,1120,9,No
+Nashik,Maharashtra,MH,West,19.9975,73.7898,Tier 2,91,23000,10,430,620,5,Yes
+Aurangabad,Maharashtra,MH,West,19.8762,75.3433,Tier 2,68,18000,8,330,460,5,No
+Delhi,Delhi,DL,North,28.7041,77.1025,Tier 1,94,72000,34,1430,2080,14,Yes
+Bengaluru,Karnataka,KA,South,12.9716,77.5946,Tier 1,71,58000,25,1180,1720,12,No
+Mysuru,Karnataka,KA,South,12.2958,76.6394,Tier 2,66,16000,7,260,410,5,No
+Chennai,Tamil Nadu,TN,South,13.0827,80.2707,Tier 1,88,51000,23,1020,1490,11,No
+Hyderabad,Telangana,TS,South,17.3850,78.4867,Tier 1,78,48000,19,920,1320,9,No
+Kolkata,West Bengal,WB,East,22.5726,88.3639,Tier 1,91,43000,18,830,1190,8,Yes
+Ahmedabad,Gujarat,GJ,West,23.0225,72.5714,Tier 1,68,35000,14,670,910,7,No
+Jaipur,Rajasthan,RJ,North,26.9124,75.7873,Tier 1,73,29000,13,540,780,6,No
+Lucknow,Uttar Pradesh,UP,North,26.8467,80.9462,Tier 1,86,31000,14,590,840,7,No
+Kochi,Kerala,KL,South,9.9312,76.2673,Tier 1,65,22000,10,410,640,5,No
+Bhopal,Madhya Pradesh,MP,Central,23.2599,77.4126,Tier 2,76,24000,11,450,670,6,No
+Patna,Bihar,BR,East,25.5941,85.1376,Tier 2,84,21000,9,390,580,5,No
+Bhubaneswar,Odisha,OD,East,20.2961,85.8245,Tier 2,69,19000,8,350,520,4,No
+Guwahati,Assam,AS,East,26.1445,91.7362,Tier 2,79,17000,7,320,460,4,No

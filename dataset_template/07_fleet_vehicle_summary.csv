@@ -1,0 +1,7 @@
+vehicle_type,total_fleet,active,in_transit,available,maintenance,breakdown
+Bike,34000,28400,4200,1200,200,0
+Auto 3W,8200,6800,1100,250,50,0
+Tempo,6400,5200,900,220,80,0
+LCV,4800,3900,680,180,40,0
+HCV Truck,3200,2600,480,100,20,0
+Air Cargo,48,42,6,0,0,0

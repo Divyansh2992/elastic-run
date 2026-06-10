@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useApp } from '../context/AppContext';
+import { useApp } from '../context/useApp';
 import ExplainerModal from './ExplainerModal';
 
 export default function Header() {
