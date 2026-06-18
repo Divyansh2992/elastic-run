@@ -1328,6 +1328,66 @@ body::before {
   flex: 1; display: flex; flex-direction: column; align-items: center; gap: 3px; padding: 10px 8px; border-radius: var(--radius);
 }
 
+/* ── Capacity Map Drill-down additions ───────────────── */
+.map-drill-crumb {
+  font-size: 0.72rem; color: var(--text-muted); padding: 3px 10px;
+  background: rgba(255,255,255,0.04); border: 1px solid var(--border);
+  border-radius: 999px;
+}
+
+/* Leaflet tooltip dark theme */
+.logi-tooltip.leaflet-tooltip {
+  background: rgba(10,14,26,0.92) !important;
+  border: 1px solid rgba(255,255,255,0.12) !important;
+  color: var(--text-primary) !important;
+  font-family: 'Inter', sans-serif !important;
+  font-size: 0.72rem !important;
+  border-radius: 8px !important;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.4) !important;
+  padding: 6px 10px !important;
+  line-height: 1.5 !important;
+}
+.logi-tooltip.leaflet-tooltip::before {
+  border-top-color: rgba(10,14,26,0.92) !important;
+}
+
+/* Capacity summary panel – business rows */
+.cap-biz-header {
+  display: grid; grid-template-columns: 1fr 36px 52px 44px;
+  gap: 4px; padding: 4px 0;
+  font-size: 0.6rem; color: var(--text-muted); font-weight: 600;
+  text-transform: uppercase; letter-spacing: 0.4px;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 4px;
+}
+.cap-biz-row {
+  display: grid; grid-template-columns: 1fr 36px 52px 44px;
+  gap: 4px; padding: 5px 0;
+  font-size: 0.72rem; align-items: center;
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+  cursor: default;
+  transition: background var(--duration) var(--ease);
+}
+.cap-biz-row:hover { background: rgba(255,255,255,0.03); border-radius: 4px; }
+.cap-biz-name { color: var(--text-secondary); font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.cap-biz-stn  { color: var(--text-muted); text-align: right; font-size: 0.65rem; }
+.cap-biz-gap  { font-weight: 700; text-align: right; font-variant-numeric: tabular-nums; font-size: 0.7rem; }
+.cap-biz-atr  { color: var(--text-muted); text-align: right; font-size: 0.65rem; }
+
+/* Top states by gap list */
+.cap-state-row {
+  display: flex; align-items: center; gap: 8px;
+  padding: 4px 0; cursor: pointer;
+  font-size: 0.72rem;
+  transition: all var(--duration) var(--ease);
+  border-radius: 4px;
+}
+.cap-state-row:hover { background: rgba(255,255,255,0.04); padding-left: 4px; }
+.cap-state-dot  { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+.cap-state-name { flex: 1; color: var(--text-secondary); font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.cap-state-gap  { font-weight: 700; font-variant-numeric: tabular-nums; font-size: 0.7rem; }
+
+
 /* ══════════════════════════════════════════════════════
    ZONE TABLE — New Columns
 ══════════════════════════════════════════════════════ */

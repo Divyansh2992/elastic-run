@@ -5,13 +5,7 @@ node_modules/
 
 # ── Environment Variables ────────────────────────────
 .env
-.env.local
-.env.development
-.env.development.local
-.env.test
-.env.test.local
-.env.production
-.env.production.local
+.env.*
 server/.env
 client/.env
 
@@ -21,9 +15,11 @@ build/
 client/dist/
 client/build/
 
-# ── Vite ─────────────────────────────────────────────
-*.local
+# ── Vite / Frontend Cache ────────────────────────────
 .vite/
+.cache/
+.parcel-cache/
+.turbo/
 
 # ── Logs ─────────────────────────────────────────────
 logs/

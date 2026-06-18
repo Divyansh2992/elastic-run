@@ -11,6 +11,7 @@ const citiesRouter     = require('./routes/cities');
 const alertsRouter     = require('./routes/alerts');
 const forecastRouter   = require('./routes/forecast');
 const routesRouter     = require('./routes/routes');
+const capacityRouter   = require('./routes/capacity');
 
 // ── App setup ─────────────────────────────────────
 const app    = express();
@@ -31,6 +32,7 @@ app.use('/api/cities',     citiesRouter);
 app.use('/api/alerts',     alertsRouter);
 app.use('/api/forecast',   forecastRouter);
 app.use('/api/routes',     routesRouter);
+app.use('/api/capacity',   capacityRouter);
 
 // Health check
 app.get('/api/health', (req, res) => {

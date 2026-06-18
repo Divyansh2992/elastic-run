@@ -14,6 +14,8 @@ export const fetchAlerts        = (limit = 30) => api.get(`/alerts?limit=${limit
 export const fetchForecast      = () => api.get('/forecast').then(r => r.data);
 export const fetchRouteLocation = (cityId) => api.get(`/routes/location/${cityId}`).then(r => r.data);
 export const searchRoutes       = (query) => api.get(`/routes?search=${encodeURIComponent(query)}`).then(r => r.data);
+export const fetchCapacity      = () => api.get('/capacity/states').then(r => r.data);
+export const fetchCapacitySummary = () => api.get('/capacity/summary').then(r => r.data);
 
 // ── Socket.io client ──────────────────────────────
 export const socket = io('/', {
