@@ -1,38 +1,45 @@
 require('dotenv').config();
-const express    = require('express');
-const http       = require('http');
+const express = require('express');
+const http = require('http');
 const { Server } = require('socket.io');
-const cors       = require('cors');
-const connectDB  = require('./config/db');
-const { tick }   = require('./services/dataEngine');
+const cors = require('cors');
+const connectDB = require('./config/db');
+const { tick } = require('./services/dataEngine');
 
 // ── Routes ────────────────────────────────────────
-const citiesRouter     = require('./routes/cities');
-const alertsRouter     = require('./routes/alerts');
-const forecastRouter   = require('./routes/forecast');
-const routesRouter     = require('./routes/routes');
-const capacityRouter   = require('./routes/capacity');
+const citiesRouter = require('./routes/cities');
+const alertsRouter = require('./routes/alerts');
+const forecastRouter = require('./routes/forecast');
+const routesRouter = require('./routes/routes');
+const capacityRouter = require('./routes/capacity');
 
 // ── App setup ─────────────────────────────────────
 const app    = express();
 const server = http.createServer(app);
+
+const allowedOrigins = [
+  'http://localhost:5173',
+  'http://localhost:3000',
+  ...(process.env.ALLOWED_ORIGINS ? process.env.ALLOWED_ORIGINS.split(',') : []),
+];
+
 const io     = new Server(server, {
   cors: {
-    origin: ['http://localhost:5173', 'http://localhost:3000'],
+    origin: allowedOrigins,
     methods: ['GET', 'POST'],
   },
 });
 
 // ── Middleware ────────────────────────────────────
-app.use(cors({ origin: ['http://localhost:5173', 'http://localhost:3000'] }));
+app.use(cors({ origin: allowedOrigins }));
 app.use(express.json());
 
 // ── REST API ──────────────────────────────────────
-app.use('/api/cities',     citiesRouter);
-app.use('/api/alerts',     alertsRouter);
-app.use('/api/forecast',   forecastRouter);
-app.use('/api/routes',     routesRouter);
-app.use('/api/capacity',   capacityRouter);
+app.use('/api/cities', citiesRouter);
+app.use('/api/alerts', alertsRouter);
+app.use('/api/forecast', forecastRouter);
+app.use('/api/routes', routesRouter);
+app.use('/api/capacity', capacityRouter);
 
 // Health check
 app.get('/api/health', (req, res) => {
@@ -51,7 +58,7 @@ io.on('connection', (socket) => {
 
 // ── Start ─────────────────────────────────────────
 const PORT = process.env.PORT || 5000;
-const TICK  = parseInt(process.env.TICK_INTERVAL_MS) || 5000;
+const TICK = parseInt(process.env.TICK_INTERVAL_MS) || 5000;
 
 connectDB().then(() => {
   server.listen(PORT, () => {
